@@ -111,10 +111,5 @@ The prototype is a static site. Upload the contents of this archive to the repos
 - Maintains desktop full-width fixed header, floating mobile header, dynamic hero color, and cart flight animation.
 
 
-## Interactive 3D inspection (November 2026)
-
-The 'A Closer Look' section now includes four **genuine 3D Sketchfab reference models**: Lay's Classic (NKaap), Takis (sacapuntas), Red Bull can (naufaltaufiq66), and Fanta can (Julie.voets). These are NOT exact 3D recreations of World Treasures catalogue SKUs (e.g., Lay's Wavy, Red Bull Cold Brew). Attribution and original model links appear in the interface.
-
-This build embeds third-party Sketchfab interactive viewers via iframe. 3D geometry is rendered remotely by Sketchfab and requires a live Internet connection and permission to load third-party content. For live commercial use, review licensing and secure exact 3D assets for each SKU before presenting this as an accurate product inspection.
-
-The old six-slice scroll scrub and photo-only viewer are hidden; the new view plays a brief entry assembly once, then remains stable while the user orbits and zooms. Subsequent scroll gestures on the page do not replay deconstruction. The hero carousel, product shop and checkout are retained.
+## Three live website colour palettes
+Use the **Choose your colours** buttons in the footer to preview three complete navy-led visual styles: Treasure Gold, Sunset Coral, and Coastal Teal. Your preference is stored locally and restored on reload. The hero retains its **product-dependent background** in every theme. This is a frontend-only feature; no backend service or build step is required.
