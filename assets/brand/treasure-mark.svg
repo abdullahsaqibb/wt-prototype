@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 118" role="img" aria-label="World Treasures open box filled with snacks">
+<defs><linearGradient id="boxGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFDA81"/><stop offset="1" stop-color="#D49C3B"/></linearGradient><linearGradient id="orange" x1="0" x2="1" y2="1"><stop stop-color="#FF8A4A"/><stop offset="1" stop-color="#DC4D28"/></linearGradient></defs>
+<g stroke-linejoin="round" stroke-linecap="round">
+<path d="M21 18 31 14 37 18 45 12 51 17 59 12 63 53 30 60Z" fill="url(#orange)" stroke="#FFBB7C" stroke-width="2"/>
+<path d="m27 29 29-7" stroke="#FFF4D5" stroke-width="3.5"/>
+<g transform="rotate(14 78 37)"><path d="M63 20 Q79 15 94 20 L91 60 66 60Z" fill="#A6D96B" stroke="#E2F4AE" stroke-width="2"/><ellipse cx="79" cy="20" rx="15.5" ry="6" fill="#D7F1A4" stroke="#EFF9D7" stroke-width="2"/><ellipse cx="79" cy="20" rx="7" ry="2.5" fill="#6D9954"/></g>
+<path d="M13 59 58 47 107 61 62 78Z" fill="#233E60" stroke="#F8E8C2" stroke-width="2"/>
+<path d="M18 67 62 80 103 66 99 103 61 115 21 102Z" fill="#102139" stroke="url(#boxGold)" stroke-width="2.6"/>
+<path d="M18 67 61 80 48 91 7 77Z" fill="#344969" stroke="#F4D58D" stroke-width="2"/>
+<path d="M61 80 103 66 114 78 73 94Z" fill="#344969" stroke="#F4D58D" stroke-width="2"/>
+<path d="M41 105 Q65 89 83 103" fill="none" stroke="#E7B956" stroke-width="2.5"/><circle cx="85" cy="103" r="3.6" fill="#E7B956"/>
+</g></svg>

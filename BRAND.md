@@ -6,3 +6,5 @@
 - Hero product-stage backgrounds change with each product (no forced navy).
 - Transparent icon asset + live-text wordmark are used in header, footer and intro.
 - Intro is approximately 1.85 seconds long and uses lightweight CSS animations.
+
+Primary brand mark: `assets/brand/treasure-mark.svg` (transparent scalable original artwork). Header is navy with white WORLD, gold TREASURES.

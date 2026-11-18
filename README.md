@@ -66,3 +66,12 @@ Connect the repository and Vercel project for ongoing code changes. Add a backen
 ## November refinement
 
 Short text-first brand reveal (skip/replay supported), dynamic product-color hero background restored, and full-sized product-to-header-cart animation that scales down along a curved path. The old resource-intensive pseudo-3D opener is removed. Text-and-icon brand lockup has no baked-in rectangular background.
+
+## November 18 navigation and identity update
+
+- Header remains sticky and floats above page content while scrolling; cart remains an accessible target.
+- New scalable SVG mystery-box mark, aligned wordmark, white WORLD / gold TREASURES.
+- Short vector brand reveal with two snack packs dropping into basket (about 1.65 seconds).
+- Cart image animation now targets the bag icon inside the fixed header.
+- Product-dependent carousel backgrounds stay in place.
+- For best results preview and test on mobile before production.
