@@ -75,3 +75,19 @@ Short text-first brand reveal (skip/replay supported), dynamic product-color her
 - Cart image animation now targets the bag icon inside the fixed header.
 - Product-dependent carousel backgrounds stay in place.
 - For best results preview and test on mobile before production.
+
+## Navigation update — desktop/full-width, mobile/floating
+- Desktop (>760px): full-width navy navigation bar remains visible while scrolling.
+- Mobile (<=760px): floating rounded navy navigation remains visible while scrolling.
+- Existing cart button remains in the persistent header, preserving the flying-to-cart target.
+- Logo and intro animation deliberately left unchanged pending visual direction approval.
+
+## November 2026 performance and identity update
+
+- Desktop: full-width persistent navigation; mobile: floating compact navigation.
+- Short unified animated mark and white/gold wordmark, with a skippable opening.
+- Continuous scroll-scrub transitions and velocity impulses removed. Product/section reveal uses IntersectionObserver once per element.
+- Product inspection remains readable and manually interactive without 3D scroll scrub.
+- Product-specific hero backgrounds and flying-to-cart interaction retained.
+- Respect reduced-motion settings.
+- Validate on a mobile device and desktop before treating animation changes as final.
