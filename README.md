@@ -91,3 +91,12 @@ Short text-first brand reveal (skip/replay supported), dynamic product-color her
 - Product-specific hero backgrounds and flying-to-cart interaction retained.
 - Respect reduced-motion settings.
 - Validate on a mobile device and desktop before treating animation changes as final.
+
+## Loader and hero hotfix (18 November 2026)
+
+- Fixes product rendering initialization error (`wtProductObservers` was referenced before initialization), which prevented the opener from finishing.
+- Adds a separate 2.5-second loader failsafe and preserves the Skip control.
+- Restores dynamic product-driven background colors to the entire hero on desktop and mobile.
+- Preserves the lightweight scrolling and fixed-desktop/floating-mobile navigation from the prior version.
+
+The prototype is a static site. Upload the contents of this archive to the repository root.
