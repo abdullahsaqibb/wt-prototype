@@ -133,3 +133,10 @@ The featured carousel now takes a curated three-color combination from each prov
 
 ## Selected product handoff animation
 When the A Closer Look viewer enters the viewport, the selected hero product image follows a short curved, tilting flight into the inspection viewer. Once it lands, the existing one-time construct/deconstruct sequence runs. The handoff does not scrub with scrolling or override drag and zoom. Reduced-motion visitors skip the handoff. This uses the catalog product photograph with perspective transforms, not a physical 360° model.
+
+
+## Carousel and handoff corrections
+- Mouse drag/swipe commits exactly one product on release. Trackpad gestures also move one product per gesture; lift/restart from the same cursor location to navigate again.
+- The additional construct/deconstruct sequence is disabled.
+- Product image handoff is rearmed after fully leaving the inspection viewer, including revisiting it by scrolling up and down. It uses the currently selected hero image.
+- The inspection viewer retains independent drag and zoom after the handoff.

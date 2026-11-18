@@ -144,6 +144,8 @@ h1,h2,h3,.display{letter-spacing:-.045em;line-height:1.05;text-transform:none}.s
 .hero-art{background:radial-gradient(ellipse at 50% 27%,var(--hero-glow) 0%,transparent 70%),var(--hero-tone)!important}
 @media(prefers-reduced-motion:reduce){.hero{transition:none!important}}
 
+/* WT handoff is the only product-entry motion; keep all photo slices aligned. */
+#flavourLab .inspect-slice-shell{--wt-sx:0px!important;--wt-sy:0px!important;--wt-sz:0px!important;--wt-sr:0deg!important}
 /* WT selected-product handoff: a short GPU-composited entrance, never a scroll scrub. */
 .wt-product-handoff{position:fixed;inset:0 auto auto 0;z-index:1100;pointer-events:none;object-fit:contain;max-width:none;max-height:none;filter:drop-shadow(0 17px 21px rgba(14,22,41,.24));transform-origin:50% 50%;backface-visibility:hidden;will-change:transform,opacity}
 #flavourLab.wt-handoff-flight #inspectModel{opacity:0!important}
@@ -768,22 +770,22 @@ if('IntersectionObserver' in window)new IntersectionObserver(entries=>{heroVisib
 
 // Trackpad: use horizontal deltaX (or Shift + wheel). Vertical page scrolling and pinch zoom stay native.
 function createWheelNavigator(navigate,clock=()=>performance.now()){
- let sum=0,last=0,lastAdvance=0,dir=0;
+ // One navigation per wheel/trackpad gesture; a pause rearms the same cursor position.
+ // Momentum events belong to the same gesture and must not skip multiple products.
+ let accumulated=0,lastEvent=0,gestureLocked=false,direction=0;
  return function(e){
   if(e.ctrlKey||e.metaKey)return false;
-  const horizontal=e.shiftKey&&Math.abs(e.deltaX)<1?e.deltaY:e.deltaX;
-  const vertical=e.shiftKey?0:e.deltaY;
-  if(Math.abs(horizontal)<.1 || Math.abs(horizontal)<Math.abs(vertical)*1.12)return false;
+  const h=e.shiftKey&&Math.abs(e.deltaX)<1?e.deltaY:e.deltaX;
+  const v=e.shiftKey?0:e.deltaY;
+  if(Math.abs(h)<.1||Math.abs(h)<Math.abs(v)*1.12)return false;
   if(e.cancelable)e.preventDefault();
-  const now=clock(),sign=Math.sign(horizontal);
-  if(now-last>210 || (dir&&sign!==dir))sum=0;
-  last=now;dir=sign;
-  sum+=horizontal*(e.deltaMode===1?16:e.deltaMode===2?stage.clientWidth:1);
-  // Re-arm after every step. A fresh trackpad gesture works without cursor relocation;
-  // long momentum tails cannot instantly skip the whole catalog.
-  if(Math.abs(sum)>=45 && now-lastAdvance>240){
-   navigate(sign);lastAdvance=now;sum=0;
-  }
+  const now=clock(),sign=Math.sign(h);
+  if(now-lastEvent>260){accumulated=0;gestureLocked=false;direction=sign}
+  lastEvent=now;
+  if(gestureLocked)return true;
+  if(sign!==direction){accumulated=0;direction=sign}
+  accumulated+=h*(e.deltaMode===1?16:e.deltaMode===2?stage.clientWidth:1);
+  if(Math.abs(accumulated)>=85){navigate(sign);gestureLocked=true;accumulated=0}
   return true;
  }
 }
@@ -814,12 +816,7 @@ stage.addEventListener('pointermove',e=>{
  swipeStart.dx=dx;
  const layer=stage.querySelector('.is-active .stage-drag-layer');
  if(layer&&!reduced){layer.style.transition='none';layer.style.transform=`translate3d(${Math.max(-80,Math.min(80,dx*.35))}px,0,0) rotateY(${Math.max(-14,Math.min(14,dx*.07))}deg)`}
- // Re-base after each completed 65px step so consecutive drags do not require moving the cursor.
- const now=performance.now();
- if(Math.abs(dx)>=65 && now-swipeStart.lastAdvance>280){
-  navigateHero(dx<0?1:-1);resetHeroClock();
-  swipeStart.x=e.clientX;swipeStart.y=e.clientY;swipeStart.dx=0;swipeStart.lastAdvance=now;
- }
+ // Do not navigate during pointermove: pointerup commits exactly one slide.
 });
 stage.addEventListener('pointerup',e=>{
  if(e.pointerType==='touch'||!swipeStart||e.pointerId!==swipeStart.id)return;
@@ -980,35 +977,32 @@ if(hasGSAP&&!reduced)$('#heroFilters').addEventListener('click',e=>{const b=e.ta
  const center=section?.querySelector('.inspect-center');
  if(!section||!model||!manip||!center)return;
  section.classList.add('wt-inspection-reworked');
- let visible=false,frame=0,manual=false,zoom=1,rx=0,ry=0,drag=null;
- const shells=[...document.querySelectorAll('#sliceProducts .inspect-slice-shell')];
- shells.forEach((shell,i)=>{shell.style.setProperty('--slice-top',(i*100/6).toFixed(3)+'%');shell.style.setProperty('--slice-bottom',(100-(i+1)*100/6).toFixed(3)+'%');shell.style.clipPath=`inset(${(i*100/6).toFixed(3)}% 0 ${(100-(i+1)*100/6).toFixed(3)}% 0)`;});
+ let manual=false,zoom=1,rx=0,ry=0,drag=null;
  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
  const writeTransform=()=>{
   manip.style.setProperty('--wt-rx',rx+'deg');manip.style.setProperty('--wt-ry',ry+'deg');manip.style.setProperty('--wt-zoom',zoom.toFixed(3));
  };
- // Run the construct/deconstruct gesture only when the viewer enters the viewport.
- // The inspection remains fully assembled while visitors scroll, drag and zoom.
- let assembledOnce=false;
+ // No extra construct/deconstruct. The selected product's trip is the only entrance motion.
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
- let handoffRunning=false;
- // The featured image, rather than an unrelated placeholder, travels into this viewer.
- // It starts once on entry: no scroll-linked timeline can compete with drag or zoom.
+ let handoffRunning=false,armed=true,flight=null,ghost=null,flightTimer=null;
  function selectedHeroPhoto(){
   return document.querySelector('#stageDeck .stage-slot.is-active .hero-front img') ||
    document.querySelector('#stageDeck .stage-slot.is-active img');
  }
+ function cleanupFlight(){
+  if(flightTimer){clearTimeout(flightTimer);flightTimer=null}
+  if(ghost){ghost.remove();ghost=null}
+  section.classList.remove('wt-handoff-flight');
+  handoffRunning=false;flight=null;
+ }
  function flySelectedProductIntoInspection(){
-  if(assembledOnce||handoffRunning)return;
+  if(!armed||handoffRunning)return;
+  armed=false;
   const photo=selectedHeroPhoto();
-  const source=photo?.getAttribute('src');
-  if(reducedMotion||!source||!model.getBoundingClientRect().width||!Element.prototype.animate){assembleOnEntry();return}
+  const source=photo?.currentSrc||photo?.getAttribute('src');
+  if(reducedMotion||!source||!model.getBoundingClientRect().width||!Element.prototype.animate)return;
   handoffRunning=true;
-  const finish=()=>{
-   ghost.remove();section.classList.remove('wt-handoff-flight');
-   handoffRunning=false;assembleOnEntry();
-  };
-  const ghost=document.createElement('img');
+  ghost=document.createElement('img');
   ghost.className='wt-product-handoff';ghost.alt='';ghost.setAttribute('aria-hidden','true');
   ghost.src=source;
   const hero=photo.getBoundingClientRect(),target=model.getBoundingClientRect();
@@ -1016,60 +1010,35 @@ if(hasGSAP&&!reduced)$('#heroFilters').addEventListener('click',e=>{const b=e.ta
   const width=Math.max(100,Math.min(340,hero.width||target.width||220));
   const height=width*Math.max(.75,Math.min(1.65,(hero.height||width*1.25)/(hero.width||width)));
   ghost.style.width=width+'px';ghost.style.height=height+'px';
-  const startX=Number.isFinite(hero.left)&&hero.width?hero.left+hero.width/2-width/2:vw/2-width/2;
-  // When the carousel has scrolled offscreen, the pack enters from above.
-  const startY=hero.bottom>0&&hero.top<vh ? hero.top+hero.height/2-height/2 : -height*.74;
+  const startX=hero.width?hero.left+hero.width/2-width/2:vw/2-width/2;
+  const startY=hero.bottom>0&&hero.top<vh?hero.top+hero.height/2-height/2:-height*.74;
   const endX=target.left+target.width/2-width/2;
   const endY=target.top+target.height/2-height/2;
   const endScale=Math.min(1.7,Math.max(.5,target.width/width));
-  const base=(x,y,deg,scale)=>`translate3d(${Math.round(x)}px,${Math.round(y)}px,0) rotate(${deg}deg) rotateY(${deg*.6}deg) scale(${scale})`;
-  document.body.append(ghost);
-  section.classList.add('wt-handoff-flight');
-  const animation=ghost.animate([
-   {transform:base(startX,startY,-22,.85),opacity:0,offset:0},
-   {transform:base(startX+(endX-startX)*.28,startY+(endY-startY)*.28,14,1.1),opacity:1,offset:.28},
-   {transform:base(startX+(endX-startX)*.72,startY+(endY-startY)*.68,-10,Math.max(.65,endScale*1.14)),opacity:1,offset:.7},
-   {transform:base(endX,endY,0,endScale*.96),opacity:1,offset:.9},
-   {transform:base(endX,endY,0,endScale),opacity:1,offset:1}
-  ],{duration:950,easing:'cubic-bezier(.2,.75,.23,1)',fill:'forwards'});
-  animation.addEventListener('finish',finish,{once:true});
-  animation.addEventListener('cancel',finish,{once:true});
-  // Defensive cleanup if Web Animations fails to dispatch completion.
-  setTimeout(()=>{if(ghost.isConnected){animation.cancel()}},1400);
+  const transform=(x,y,deg,scale)=>`translate3d(${Math.round(x)}px,${Math.round(y)}px,0) rotate(${deg}deg) rotateY(${deg*.6}deg) scale(${scale})`;
+  document.body.append(ghost);section.classList.add('wt-handoff-flight');
+  flight=ghost.animate([
+   {transform:transform(startX,startY,-18,.85),opacity:0,offset:0},
+   {transform:transform(startX+(endX-startX)*.3,startY+(endY-startY)*.3,15,1.1),opacity:1,offset:.28},
+   {transform:transform(startX+(endX-startX)*.76,startY+(endY-startY)*.68,-9,Math.max(.65,endScale*1.12)),opacity:1,offset:.72},
+   {transform:transform(endX,endY,0,endScale),opacity:1,offset:1}
+  ],{duration:900,easing:'cubic-bezier(.2,.75,.23,1)',fill:'forwards'});
+  flight.addEventListener('finish',cleanupFlight,{once:true});
+  flight.addEventListener('cancel',cleanupFlight,{once:true});
+  flightTimer=setTimeout(cleanupFlight,1300);
  }
-
- function spread(amount){
-  shells.forEach((shell,i)=>{
-   const band=i-2.5,depth=Math.abs(band);
-   shell.style.setProperty('--wt-sx',(band*20*amount).toFixed(1)+'px');
-   shell.style.setProperty('--wt-sy',(band*15*amount).toFixed(1)+'px');
-   shell.style.setProperty('--wt-sz',((2.5-depth)*22*amount).toFixed(1)+'px');
-   shell.style.setProperty('--wt-sr',(band*4*amount).toFixed(2)+'deg');
-  });
- }
- function assembleOnEntry(){
-  if(assembledOnce)return;
-  assembledOnce=true;
-  const chapter=section.querySelector('#labChapter'),desc=section.querySelector('#labDescription');
-  if(chapter)chapter.textContent='02 / EXPLORE THE PACK';
-  if(desc)desc.textContent='Selected from the hero carousel. Drag to tilt and use the zoom controls.';
-  section.querySelector('#labProgress')?.style.setProperty('transform','scaleX(1)');
-  if(reducedMotion){spread(0);return}
-  const start=performance.now(),duration=1250;
-  function tick(now){
-   const p=Math.min(1,(now-start)/duration);
-   // Split, then fully reassemble once, independent of scrolling.
-   const amount=Math.sin(Math.PI*p)**2;
-   spread(amount);
-   if(p<1)requestAnimationFrame(tick);
-   else spread(0);
-  }
-  requestAnimationFrame(tick);
- }
+ const chapter=section.querySelector('#labChapter'),desc=section.querySelector('#labDescription');
+ if(chapter)chapter.textContent='02 / EXPLORE THE PACK';
+ if(desc)desc.textContent='Selected from the hero carousel. Drag to tilt and use the zoom controls.';
+ section.querySelector('#labProgress')?.style.setProperty('transform','scaleX(1)');
  if('IntersectionObserver' in window){
   const observer=new IntersectionObserver(entries=>{
-   if(entries.some(e=>e.isIntersecting)){flySelectedProductIntoInspection();observer.disconnect()}
-  },{threshold:.3});
+   const entry=entries[0];
+   if(!entry)return;
+   // A full departure rearms the next entry, including on scroll-up then scroll-down.
+   if(!entry.isIntersecting){armed=true;if(handoffRunning){flight?.cancel();cleanupFlight()}return}
+   if(entry.intersectionRatio>=.28)flySelectedProductIntoInspection();
+  },{threshold:[0,.28,.5]});
   observer.observe(center);
  }else flySelectedProductIntoInspection();
  // Tilt uses a photo plane with perspective, not an invented backside or a fake 360-degree texture.
