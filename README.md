@@ -113,3 +113,6 @@ The prototype is a static site. Upload the contents of this archive to the repos
 
 ## Three live website colour palettes
 Use the **Choose your colours** buttons in the footer to preview three complete navy-led visual styles: Treasure Gold, Sunset Coral, and Coastal Teal. Your preference is stored locally and restored on reload. The hero retains its **product-dependent background** in every theme. This is a frontend-only feature; no backend service or build step is required.
+
+## Product-color hero & six palette choices
+The featured carousel now takes a curated three-color combination from each provided product image, producing layered animated gradient lighting behind its product. The enlarged background product name animates into view behind the pack. Carousel indicators are dot-only without a square active button. The footer now has six selectable navy-based palettes: Treasure Gold, Sunset Coral, Coastal Teal, Electric Lime, Royal Violet, and Berry Rose. User theme choice is stored locally. Reduced-motion mode stops background animation.
