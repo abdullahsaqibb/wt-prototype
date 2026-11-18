@@ -62,3 +62,7 @@ Connect the repository and Vercel project for ongoing code changes. Add a backen
 - Reduced-motion settings bypass decorative sequences.
 - Product images and demo commerce data remain illustrative. Exact real-world 3D packet backs and geometry are not available in the source package.
 - Replace repository root files with the contents of this ZIP; do not upload the ZIP itself as a single GitHub file.
+
+## November refinement
+
+Short text-first brand reveal (skip/replay supported), dynamic product-color hero background restored, and full-sized product-to-header-cart animation that scales down along a curved path. The old resource-intensive pseudo-3D opener is removed. Text-and-icon brand lockup has no baked-in rectangular background.
