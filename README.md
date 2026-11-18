@@ -140,3 +140,16 @@ When the A Closer Look viewer enters the viewport, the selected hero product ima
 - The additional construct/deconstruct sequence is disabled.
 - Product image handoff is rearmed after fully leaving the inspection viewer, including revisiting it by scrolling up and down. It uses the currently selected hero image.
 - The inspection viewer retains independent drag and zoom after the handoff.
+
+## Downward-only product handoff
+
+The selected hero product flies into the inspection section only when scrolling down from the hero. Returning upwards from lower sections never triggers a reverse or replay. To replay, scroll back above the inspection area and then enter it from above again.
+
+
+## Mobile header and inspection update
+
+- Replaced the bottom floating dock with one fixed, 58px top header on mobile (<=760px).
+- Kept the native cart button in the header so flying products have a visible destination and cart toasts are unobstructed at the bottom.
+- Added two-finger pinch zoom to the inspection product (0.7x–2.15x); one-finger tilt, zoom buttons, and downward-only product handoff are retained.
+- Added narrow-phone spacing, sticky-header anchor offsets, and touch target improvements.
+- Verify interaction on physical iOS Safari and Android Chrome before launch.
