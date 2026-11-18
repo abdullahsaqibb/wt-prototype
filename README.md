@@ -121,3 +121,15 @@ The featured carousel now takes a curated three-color combination from each prov
 - Background hero product name made substantially lighter and less visually dominant.
 - All six palette options now also update the sticky header cart, intro accent colors, display logos, selected viewer controls, and site-wide accent accents. Physical product package imagery is intentionally not recolored.
 - The A Closer Look section gets a calm, theme-specific background independent of the selected hero product. Changing hero products only changes product imagery and its metadata.
+
+
+## Prototype interaction revamp (November 2026)
+- Carousel trackpad and pointer gestures re-arm without repositioning the cursor. Touch behavior retained.
+- Desktop retains full-length header; mobile uses fixed bottom four-action dock. The dock bag forwards to the real cart.
+- Product inspection remains photo-based; six-layer assembly plays once on entry, and drag/zoom is independent of scroll.
+- Loader follows a W → WORLD → TREASURES → 3D-styled box → snack drop storyboard. This is a lightweight vector animation, not a real 3D package model.
+- Current catalog retains 15 demo listings and category filters; no invented additional product listings.
+
+
+## Selected product handoff animation
+When the A Closer Look viewer enters the viewport, the selected hero product image follows a short curved, tilting flight into the inspection viewer. Once it lands, the existing one-time construct/deconstruct sequence runs. The handoff does not scrub with scrolling or override drag and zoom. Reduced-motion visitors skip the handoff. This uses the catalog product photograph with perspective transforms, not a physical 360° model.
