@@ -22,3 +22,6 @@ The storefront includes three visitor-selectable navy-first palettes. The footer
 - Royal Violet: Navy #1B1C40 · Lilac #B7A2F2 · Violet #8D65BB · Paper #F7F3FF
 - Berry Rose: Navy #16253D · Rose #EF8CAA · Berry #B65180 · Paper #FFF4F6
 Each product's hero colorway is independent of the global theme.
+
+### Palette implementation note
+Product-derived colors apply only to the hero display. The Closer Look background uses each palette's stable `--wt-inspect-bg`, while global brand accent styling uses `--wt-highlight`. Real packaging images are never recolored.

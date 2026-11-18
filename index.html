@@ -465,6 +465,84 @@ html[data-wt-theme="lime"]{--wt-navy:#10293c;--wt-deep:#071c2b;--wt-highlight:#c
 html[data-wt-theme="violet"]{--wt-navy:#1b1c40;--wt-deep:#12152e;--wt-highlight:#b7a2f2;--wt-highlight-ink:#1b1c40;--wt-secondary:#8d65bb;--wt-paper:#f7f3ff;--wt-pale:#eee5ff;--wt-lavender:#ddd7f3;--wt-rule:#d9d0e7;--paper:var(--wt-paper);--ink:var(--wt-navy);--accent:var(--wt-highlight);--soft:#e6d8ff;--line:var(--wt-rule);--brand-orange:var(--wt-highlight);--brand-pistachio:var(--wt-pale);--brand-lavender:var(--wt-lavender)}
 html[data-wt-theme="rose"]{--wt-navy:#16253d;--wt-deep:#101a30;--wt-highlight:#ef8caa;--wt-highlight-ink:#16253d;--wt-secondary:#b65180;--wt-paper:#fff4f6;--wt-pale:#ffe1eb;--wt-lavender:#efe0ee;--wt-rule:#e8cdda;--paper:var(--wt-paper);--ink:var(--wt-navy);--accent:var(--wt-highlight);--soft:#f7d5e5;--line:var(--wt-rule);--brand-orange:var(--wt-highlight);--brand-pistachio:var(--wt-pale);--brand-lavender:var(--wt-lavender)}
 @media(min-width:701px){.wt-theme-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+</style><style id="wt-balanced-themes">
+
+/* WT refinement: toned-down background lettering and comprehensive site themes. */
+.hero .stage-word{
+  color:color-mix(in srgb,var(--wt-product-ink) 15%,transparent)!important;
+  -webkit-text-stroke:1px color-mix(in srgb,var(--wt-product-ink) 18%,transparent)!important;
+  text-shadow:none!important;
+  opacity:.32!important;
+  font-size:clamp(65px,10vw,160px)!important;
+  letter-spacing:-.055em!important;
+}
+.hero .stage-word.wt-word-enter{animation:wtWordSoftReveal .6s cubic-bezier(.2,.75,.2,1) both!important}
+@keyframes wtWordSoftReveal{
+  from{opacity:0;translate:0 11px}
+  to{opacity:.32;translate:0 0}
+}
+@media(max-width:760px){
+  .hero .stage-word{font-size:clamp(48px,12vw,82px)!important;opacity:.25!important}
+  .hero .stage-word.wt-word-enter{animation-name:wtWordSoftRevealMobile!important}
+  @keyframes wtWordSoftRevealMobile{from{opacity:0;translate:0 8px}to{opacity:.25;translate:0 0}}
+}
+/* Section-color boundary: hero is product-driven; product inspection is theme-driven. */
+html[data-wt-theme] #flavourLab.inspection-story,
+html[data-wt-theme] #flavourLab.wt-inspection-reworked,
+html[data-wt-theme] #flavourLab .inspection-sticky{
+  background:var(--wt-inspect-bg,var(--wt-paper))!important;
+  color:var(--wt-navy)!important;
+  transition:background-color .35s ease;
+}
+html[data-wt-theme] #flavourLab .inspection-title h2,
+html[data-wt-theme] #flavourLab .inspect-callout strong,
+html[data-wt-theme] #flavourLab .inspection-top,
+html[data-wt-theme] #flavourLab .inspection-bottom{color:var(--wt-navy)!important}
+html[data-wt-theme] #flavourLab .inspection-title p,
+html[data-wt-theme] #flavourLab .lab-copy p{color:color-mix(in srgb,var(--wt-navy) 72%,var(--wt-inspect-bg))!important}
+html[data-wt-theme] #flavourLab .inspection-ring,
+html[data-wt-theme] #flavourLab .inspection-ring:after{border-color:color-mix(in srgb,var(--wt-navy) 12%,transparent)!important}
+html[data-wt-theme] #flavourLab .inspect-controls button[aria-pressed=true]{background:var(--wt-highlight)!important;color:var(--wt-highlight-ink)!important;border-color:var(--wt-highlight)!important}
+/* Full-site theme coverage: navigation and decorative gold should use chosen accent. */
+html[data-wt-theme] header .cart-button{background:var(--wt-highlight)!important;color:var(--wt-highlight-ink)!important}
+html[data-wt-theme] header .cart-button svg{color:var(--wt-highlight-ink)!important}
+html[data-wt-theme] header .cart-button:hover{background:var(--wt-secondary)!important;color:#fff!important}
+html[data-wt-theme] .wt-brand-type strong:nth-child(2),
+html[data-wt-theme] .wt-reveal-bottom,
+html[data-wt-theme] .wt-intro-gold,
+html[data-wt-theme] .wt-intro-snack-a,
+html[data-wt-theme] .wt-reveal-words .wt-reveal-bottom,
+html[data-wt-theme] .lab-heading h2 em,
+html[data-wt-theme] .inspection-title h2 em,
+html[data-wt-theme] .hero .eyebrow .dot{color:var(--wt-highlight)!important}
+html[data-wt-theme] .wt-intro-brief .wt-reveal-words:after{
+  background:linear-gradient(90deg,transparent,var(--wt-highlight) 25%,color-mix(in srgb,var(--wt-highlight) 38%,white) 70%,transparent)!important
+}
+html[data-wt-theme] .wt-intro-brief .wt-reveal-mark:before{background:color-mix(in srgb,var(--wt-highlight) 22%,transparent)!important}
+html[data-wt-theme] .intro .skip{border-color:color-mix(in srgb,var(--wt-highlight) 42%,white)!important}
+html[data-wt-theme] .wt-reveal-mark svg path[stroke="#E7B956"],
+html[data-wt-theme] .wt-reveal-mark svg path[stroke="#e7b956"]{stroke:var(--wt-highlight)!important}
+html[data-wt-theme] .wt-reveal-mark svg circle[fill="#E7B956"]{fill:var(--wt-highlight)!important}
+html[data-wt-theme] .wt-reveal-mark svg path[stroke="#F4D58D"]{stroke:color-mix(in srgb,var(--wt-highlight) 58%,white)!important}
+html[data-wt-theme] .button.light,
+html[data-wt-theme] .stage-shop{background:var(--wt-highlight)!important;color:var(--wt-highlight-ink)!important}
+html[data-wt-theme] .stage-controls button{border-color:var(--wt-highlight)!important;color:var(--wt-highlight)!important}
+html[data-wt-theme] .exclusive-label{color:var(--wt-highlight)!important;border-color:color-mix(in srgb,var(--wt-highlight) 60%,transparent)!important}
+html[data-wt-theme] .hero .dot,
+html[data-wt-theme] .hero h1 em:after{background:var(--wt-highlight)!important}
+html[data-wt-theme] #wt-theme-heading+span,
+html[data-wt-theme] .wt-theme-picker .eyebrow{color:var(--wt-highlight)!important}
+html[data-wt-theme] .badge.hot{background:var(--wt-highlight)!important;color:var(--wt-highlight-ink)!important}
+html[data-wt-theme] .stars{color:var(--wt-secondary)!important}
+html[data-wt-theme] .notice{background:var(--wt-pale)!important;color:var(--wt-navy)!important}
+html[data-wt-theme] .stage-dots button[aria-pressed=true]:after{background:var(--wt-product-ink)!important}
+@media(prefers-reduced-motion:reduce){.hero .stage-word.wt-word-enter{animation:none!important;opacity:.25!important}}
+html[data-wt-theme="gold"]{--wt-inspect-bg:#eef1ed}
+html[data-wt-theme="coral"]{--wt-inspect-bg:#fff0e6}
+html[data-wt-theme="teal"]{--wt-inspect-bg:#e4f1f1}
+html[data-wt-theme="lime"]{--wt-inspect-bg:#edf4e0}
+html[data-wt-theme="violet"]{--wt-inspect-bg:#eeeafa}
+html[data-wt-theme="rose"]{--wt-inspect-bg:#f9eaf0}
 </style></head><body>
 <a class="sr-only" href="#shop">Skip to products</a><div aria-label="World Treasures opening" class="intro wt-intro-brief" id="intro" role="status">
 <button aria-label="Skip opening animation" class="skip" id="skipIntro" type="button">Skip</button>

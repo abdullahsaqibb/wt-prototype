@@ -116,3 +116,8 @@ Use the **Choose your colours** buttons in the footer to preview three complete 
 
 ## Product-color hero & six palette choices
 The featured carousel now takes a curated three-color combination from each provided product image, producing layered animated gradient lighting behind its product. The enlarged background product name animates into view behind the pack. Carousel indicators are dot-only without a square active button. The footer now has six selectable navy-based palettes: Treasure Gold, Sunset Coral, Coastal Teal, Electric Lime, Royal Violet, and Berry Rose. User theme choice is stored locally. Reduced-motion mode stops background animation.
+
+## Theme and inspection refinements (November 2026)
+- Background hero product name made substantially lighter and less visually dominant.
+- All six palette options now also update the sticky header cart, intro accent colors, display logos, selected viewer controls, and site-wide accent accents. Physical product package imagery is intentionally not recolored.
+- The A Closer Look section gets a calm, theme-specific background independent of the selected hero product. Changing hero products only changes product imagery and its metadata.
