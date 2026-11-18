@@ -100,3 +100,12 @@ Short text-first brand reveal (skip/replay supported), dynamic product-color her
 - Preserves the lightweight scrolling and fixed-desktop/floating-mobile navigation from the prior version.
 
 The prototype is a static site. Upload the contents of this archive to the repository root.
+
+
+## Current iteration — scroll inspection, mobile swipe and loader
+
+- Restores scroll-driven 6-layer assembly/deconstruction of the **currently selected hero product**. Updates occur only while the inspection is visible.
+- Adds drag-to-tilt, zoom buttons and reset/follow-scroll controls. This is **CSS perspective using the supplied front-facing image**. It is not a genuine 360-degree 3D model with accurate side/back packaging. Source 3D models and textures would be needed for that.
+- Adds independent native touch handling for the hero carousel without pointer capture on touch devices.
+- Retains existing lightweight transparent vector brand intro, shortens its duration, and preserves loader failsafe.
+- Maintains desktop full-width fixed header, floating mobile header, dynamic hero color, and cart flight animation.
