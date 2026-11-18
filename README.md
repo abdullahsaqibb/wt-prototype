@@ -53,3 +53,12 @@ Cart state is in browser memory and resets on reload. Sign-in and newsletter sub
 ## Next development phase
 
 Connect the repository and Vercel project for ongoing code changes. Add a backend for products, orders and authentication, then integrate Payfast on the server with verified payment notifications and real fulfillment rules. Keep merchant credentials in environment variables, never in this HTML or Git history.
+
+## November 2026 visual update
+
+- Brand assets updated to white/gold on navy and the palette revised across the website.
+- New product-led perspective intro (Lay's, Takis, Red Bull), with a cinematic spin and particle accents. GSAP is loaded from CDN; the intro has a fallback if unavailable.
+- Add-to-cart now flies an actual product photo to the cart icon using browser-native Web Animations, with cart bounce feedback.
+- Reduced-motion settings bypass decorative sequences.
+- Product images and demo commerce data remain illustrative. Exact real-world 3D packet backs and geometry are not available in the source package.
+- Replace repository root files with the contents of this ZIP; do not upload the ZIP itself as a single GitHub file.
